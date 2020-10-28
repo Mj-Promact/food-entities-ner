@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Foodie Favorites</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="{{ url_for('static', filename='css/stylesheet.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='fork-and-spoon.ico') }}">
+</head>
+
+<body>
+
+    <!-- Page Content -->
+    <div class="w3-padding-large w3-text-amber w3-xlarge col-sm-5 col-sm-offset-1" id="main">
+
+        <!-- Header -->
+        <header class="w3-container w3-padding-32 w3-center" id="home">
+            <h1 class="w3-jumbo"><b>Foodie Favorites</b></h1>
+            <p>
+                <b>This application uses Natural Language Processing on Yelp reviews
+                <br>to help users find out what dishes are in the reviews.
+                </b>
+            </p>
+        </header>
+
+        <p class="w3-center w3-large">
+            <b>Enter the review below or upload pdf file</b>
+        </p>
+
+        <form name="review_form" class="w3-center" role="form" method='POST' action="{{ url_for('text_review') }}">
+            <div class="form-group">
+                <!--<input type="text" name="review" class="form-control" id="review-box" placeholder="Enter Review..." autofocus required> -->
+                <textarea id="review-box" name="review" rows="3" cols="50" class="w3-black"></textarea>
+            </div>
+            <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Submit</button>
+        </form>
+
+        <form name="pdf_form" class="w3-center" method="post" enctype="multipart/form-data" action="{{ url_for('pdf_review') }}">
+            <input class="w3-button w3-black w3-padding-large w3-large w3-margin-top" type="file" name="pdf" style="margin:0px auto; display:block;" />
+            <input class="w3-button w3-black w3-padding-large w3-large w3-margin-top" type="submit" value="Upload" />
+        </form>
+
+    </div>
+
+    <div class="w3-padding-large w3-text-amber w3-xlarge col-sm-5 col-sm-offset-1">
+        <header class="w3-container w3-padding-32 w3-center" id="home">
+            <h1 class="w3-jumbo"><b>Food Items</b></h1>
+        </header>
+
+        {% if food_entities %}
+        {% for food in food_entities%}
+        <p class="w3-center w3-large"><b>{{ food }}</b></p>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <br><br>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>
