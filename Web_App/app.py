@@ -20,7 +20,7 @@ def allowed_file(filename: str):
 
 def load_ner(path: str):
     food_tagger = spacy.load(path)
-    print(f'NER model loaded successfully...')
+    print(f'LOG: NER model loaded successfully...')
 
     return food_tagger
 
@@ -44,6 +44,9 @@ def text_review():
 
     if request.form['review']:
         review = request.form['review']
+
+        if review:
+            print(f"LOG: Text-review received...")
 
         entities = food_tagger(review)
 
@@ -73,6 +76,8 @@ def pdf_review():
         filename = secure_filename(pdf_file.filename)
         
         review = parse_pdf(pdf_file.read())
+        if review:
+            print(f'LOG: PDF-review received...')
 
         entities = food_tagger(review)
 
